@@ -1,28 +1,28 @@
-import localFont from "next/font/local";
 import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
+import { cn } from "@/lib/utils";
+import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/footer";
-import { cn } from "@/lib/utils";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+const geist = Geist({
+  subsets: ["latin"],
   variable: "--font-geist-sans",
-  weight: "100 900",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
   variable: "--font-geist-mono",
-  weight: "100 900",
 });
 
 export const metadata = {
   title: "myAngadi",
-  description: "myAngadi is an E-Commerce Admin Dashboard for managing your online store built as a part of after the school academy course",
+  description:
+    "myAngadi is an E-Commerce Admin Dashboard for managing your online store built as a part of after the school academy course",
   openGraph: {
     title: "myAngadi",
-    description: "myAngadi is an E-Commerce Admin Dashboard for managing your online store built as a part of after the school academy course",
+    description:
+      "myAngadi is an E-Commerce Admin Dashboard for managing your online store built as a part of after the school academy course",
     url: "https://ecommerce-admin-zeta-one.vercel.app/", // Replace with your actual URL
     siteName: "myAngadi",
     images: [
@@ -37,18 +37,18 @@ export const metadata = {
     type: "website",
   },
 };
+
 export default function RootLayout({ children }) {
   return (
-    <html>
-      <head />
+    <html suppressHydrationWarning>
       <body
         className={cn(
-          "max-h-screen bg-background font-sans antialiased",
-          geistSans.variable,
+          "font-sans antialiased",
+          geist.variable,
           geistMono.variable
         )}
       >
-        <ClerkProvider>
+        <ClerkProvider afterSignOutUrl="/">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -56,7 +56,9 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Navbar />
-            {children}
+            <main className="py-20 grid w-full max-w-7xl mx-auto min-h-screen overflow-x-hidden px-4">
+              {children}
+            </main>
             {/* <Footer /> */}
           </ThemeProvider>
         </ClerkProvider>
